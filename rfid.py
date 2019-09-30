@@ -53,12 +53,13 @@ class RFID:
             for k in row:
                 if k.value == self.l_to_st:
                     print("I found your UID", uid_active_wb.cell(row_iteration, 2).value)
+                    self.uid_found_row = row_iteration #assign the row in which UID was found to this attribute
                     self.uid_found = 1
                     break
             row_iteration += 1 #increment the row we are at by 1
         #create exceptionhandling here
         if self.uid_found == 1:
-            self.authentication_level = uid_active_wb.cell(row = row_iteration-1, column = 3).value
+            self.authentication_level = self.uid_found_row
             if self.authentication_level >= int(self.full_message[5]):
                 self.authentication_level = 1
             else:
