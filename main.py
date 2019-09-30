@@ -18,10 +18,9 @@ import gpiozero
 #    raw_data = ser.readline() #read serial port until a '\n' termination byte is recieved
 raw_data = ['2', '02', '6B', '19', '5D', '1', '\n']
 rfid_message = rfid.RFID(raw_data) #pass raw_data to new instance object 'rfid_message'
-print(type(rfid_message))
-if rfid_message.authenticate_access == 1:
+if rfid_message.authentication_level == 1:
     #lock.on()
-    sleep(5) #lock will unlock for 5 seconds
+    #lock will unlock for 5 seconds
     print('AUTHENTICATED')
 else:
    # rfid_permission_led.blink(0.6, 0.4, 4) #blink on for 0.6seconds, off, for 0.4 seconds, blink 4 times

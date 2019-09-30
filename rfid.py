@@ -37,7 +37,6 @@ class RFID:
         else:
             print("This is not an RFID message")
         self.l_to_st = ''.join(self.rfid_presented) #string of rfid
-        print(self.l_to_st)
         self.check_valid_uid()
 
     def check_valid_uid(self):
@@ -53,16 +52,16 @@ class RFID:
         for row in uid_active_wb.iter_rows(min_col = 1, max_col = 1): #search only column 1
             for k in row:
                 if k.value == self.l_to_st:
-                    print(k.value)
                     print("I found your UID", uid_active_wb.cell(row_iteration, 2).value)
                     self.uid_found = 1
                     break
             row_iteration += 1 #increment the row we are at by 1
+        #create exceptionhandling here
         if self.uid_found == 1:
-            self.authentication_level = uid_active_wb.cell(row = row_iteration, column = 3).value
-            if self.authentication_level >= self.full_message[5]:
+            self.authentication_level = uid_active_wb.cell(row = row_iteration-1, column = 3).value
+            if self.authentication_level >= int(self.full_message[5]):
                 self.authentication_level = 1
             else:
                 self.authentication_level = 0
         else:
-            self.authenticate_access = 0
+            self.authentication_level = 0
