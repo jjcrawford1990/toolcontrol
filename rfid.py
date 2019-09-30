@@ -49,6 +49,7 @@ class RFID:
         uid_active_wb = uid_wb.active  # create an object of the active workbook
         uiddata_ws = uid_wb.worksheets[0]  # create an object of the first worksheet
         row_iteration = 1 #define a variable to store the row number we are at
+        self.uid_found = 0 #create attribute, if not created, will throw attribute error if evaluating as UID not found.
         for row in uid_active_wb.iter_rows(min_col = 1, max_col = 1): #search only column 1
             for k in row:
                 if k.value == self.l_to_st:
@@ -57,7 +58,6 @@ class RFID:
                     self.uid_found = 1
                     break
             row_iteration += 1 #increment the row we are at by 1
-        #create exceptionhandling here
         if self.uid_found == 1:
             self.authentication_level = self.uid_found_row
             if self.authentication_level >= int(self.full_message[5]):
