@@ -17,12 +17,12 @@ ser = serial.Serial(
 while True:
     raw_data = ser.readline() #read serial port until a '\n' termination byte is recieved
     rfid_message = rfid.RFID(raw_data) #pass raw_data to new instance object 'rfid_message'
-    if rfid_message.authentication_level == 1:
+    if rfid_message.authenticate == 1: #if authenticated for access, unlock
         #lock.on()
         #lock will unlock for 5 seconds
         print(raw_data)
-        print('RFID: ' +str(rfid_message.l_to_st))
-        print('Access Level ' + str(rfid_message.authentication_level) + ' granted!')
+        print('RFID: ' + str(rfid_message.rfid_requesting_access))
+        print('Access granted!')
     elif len(raw_data) == 0: #if no data is present(timeout reached), do nothing.
         pass
     else:
